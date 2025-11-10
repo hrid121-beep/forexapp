@@ -22,7 +22,7 @@ export const appRouter = router({
 
   // Forex account management
   forexAccounts: router({
-    list: publicProcedure.query(async () => {
+    list: protectedProcedure.query(async () => {
       const { getAllForexAccounts } = await import('./db');
       return getAllForexAccounts();
     }),
@@ -88,15 +88,15 @@ export const appRouter = router({
 
   // Server management
   servers: router({
-    list: publicProcedure.query(async () => {
+    list: protectedProcedure.query(async () => {
       const { getAllServers } = await import('./db');
       return getAllServers();
     }),
-    create: publicProcedure.input((val: any) => val).mutation(async ({ input }) => {
+    create: adminProcedure.input((val: any) => val).mutation(async ({ input }) => {
       const { createServer } = await import('./db');
       return createServer(input.name);
     }),
-    delete: publicProcedure.input((val: any) => val).mutation(async ({ input }) => {
+    delete: adminProcedure.input((val: any) => val).mutation(async ({ input }) => {
       const { deleteServer } = await import('./db');
       await deleteServer(input.id);
       return { success: true };
@@ -105,15 +105,15 @@ export const appRouter = router({
 
   // Bot management
   bots: router({
-    list: publicProcedure.query(async () => {
+    list: protectedProcedure.query(async () => {
       const { getAllBots } = await import('./db');
       return getAllBots();
     }),
-    create: publicProcedure.input((val: any) => val).mutation(async ({ input }) => {
+    create: adminProcedure.input((val: any) => val).mutation(async ({ input }) => {
       const { createBot } = await import('./db');
       return createBot(input.name);
     }),
-    delete: publicProcedure.input((val: any) => val).mutation(async ({ input }) => {
+    delete: adminProcedure.input((val: any) => val).mutation(async ({ input }) => {
       const { deleteBot } = await import('./db');
       await deleteBot(input.id);
       return { success: true };
@@ -122,11 +122,11 @@ export const appRouter = router({
 
   // User management
   users: router({
-    list: publicProcedure.query(async () => {
+    list: adminProcedure.query(async () => {
       const { getAllUsers } = await import('./db');
       return getAllUsers();
     }),
-    updateRole: publicProcedure.input((val: any) => val).mutation(async ({ input }) => {
+    updateRole: adminProcedure.input((val: any) => val).mutation(async ({ input }) => {
       const { updateUserRole } = await import('./db');
       await updateUserRole(input.userId, input.role);
       return { success: true };
@@ -135,31 +135,31 @@ export const appRouter = router({
 
   // Custom Fields Management
   customFields: router({
-    getByEntity: publicProcedure.input((val: any) => val).query(async ({ input }) => {
+    getByEntity: protectedProcedure.input((val: any) => val).query(async ({ input }) => {
       const { getCustomFields } = await import('./db');
       return getCustomFields(input.entityType, input.entityId);
     }),
-    getAllByType: publicProcedure.input((val: any) => val).query(async ({ input }) => {
+    getAllByType: protectedProcedure.input((val: any) => val).query(async ({ input }) => {
       const { getAllCustomFieldsByType } = await import('./db');
       return getAllCustomFieldsByType(input.entityType);
     }),
-    create: publicProcedure.input((val: any) => val).mutation(async ({ input, ctx }) => {
+    create: adminProcedure.input((val: any) => val).mutation(async ({ input, ctx }) => {
       const { createCustomField } = await import('./db');
       // Add createdBy from context
       const fieldData = {
         ...input,
-        createdBy: ctx.user?.id || 1,
+        createdBy: ctx.user.id,
       };
       await createCustomField(fieldData);
       return { success: true };
     }),
-    update: publicProcedure.input((val: any) => val).mutation(async ({ input }) => {
+    update: adminProcedure.input((val: any) => val).mutation(async ({ input }) => {
       const { updateCustomField } = await import('./db');
       const { id, ...updates } = input;
       await updateCustomField(id, updates);
       return { success: true };
     }),
-    delete: publicProcedure.input((val: any) => val).mutation(async ({ input }) => {
+    delete: adminProcedure.input((val: any) => val).mutation(async ({ input }) => {
       const { deleteCustomField } = await import('./db');
       await deleteCustomField(input.id);
       return { success: true };
@@ -168,30 +168,30 @@ export const appRouter = router({
 
   // Schema Modifications Management
   schemaModifications: router({
-    getAll: publicProcedure.query(async () => {
+    getAll: adminProcedure.query(async () => {
       const { getAllSchemaModifications } = await import('./db');
       return getAllSchemaModifications();
     }),
-    getPending: publicProcedure.query(async () => {
+    getPending: adminProcedure.query(async () => {
       const { getPendingSchemaModifications } = await import('./db');
       return getPendingSchemaModifications();
     }),
-    create: publicProcedure.input((val: any) => val).mutation(async ({ input, ctx }) => {
+    create: adminProcedure.input((val: any) => val).mutation(async ({ input, ctx }) => {
       const { createSchemaModification } = await import('./db');
       const modData = {
         ...input,
-        createdBy: ctx.user?.id || 1,
+        createdBy: ctx.user.id,
         status: 'pending' as const,
       };
       await createSchemaModification(modData);
       return { success: true };
     }),
-    approve: publicProcedure.input((val: any) => val).mutation(async ({ input }) => {
+    approve: adminProcedure.input((val: any) => val).mutation(async ({ input }) => {
       const { updateSchemaModificationStatus } = await import('./db');
       await updateSchemaModificationStatus(input.id, 'approved');
       return { success: true };
     }),
-    execute: publicProcedure.input((val: any) => val).mutation(async ({ input }) => {
+    execute: adminProcedure.input((val: any) => val).mutation(async ({ input }) => {
       const { executeSchemaModification } = await import('./db');
       try {
         await executeSchemaModification(input.id);
@@ -204,31 +204,31 @@ export const appRouter = router({
 
   // System Settings Management
   settings: router({
-    get: publicProcedure.input((val: any) => val).query(async ({ input }) => {
+    get: adminProcedure.input((val: any) => val).query(async ({ input }) => {
       const { getSetting } = await import('./db');
       return getSetting(input.key);
     }),
-    getAll: publicProcedure.query(async () => {
+    getAll: adminProcedure.query(async () => {
       const { getAllSettings } = await import('./db');
       return getAllSettings();
     }),
-    set: publicProcedure.input((val: any) => val).mutation(async ({ input, ctx }) => {
+    set: adminProcedure.input((val: any) => val).mutation(async ({ input, ctx }) => {
       const { setSetting } = await import('./db');
       await setSetting({
         settingKey: input.key,
         settingValue: input.value,
         settingType: input.type || 'config',
         description: input.description,
-        updatedBy: ctx.user?.id,
+        updatedBy: ctx.user.id,
       });
       return { success: true };
     }),
-    delete: publicProcedure.input((val: any) => val).mutation(async ({ input }) => {
+    delete: adminProcedure.input((val: any) => val).mutation(async ({ input }) => {
       const { deleteSetting } = await import('./db');
       await deleteSetting(input.key);
       return { success: true };
     }),
-    testGrokApiKey: publicProcedure.input((val: any) => val).mutation(async ({ input }) => {
+    testGrokApiKey: adminProcedure.input((val: any) => val).mutation(async ({ input }) => {
       try {
         const apiKey = input.apiKey;
         if (!apiKey || !apiKey.trim()) {
@@ -282,12 +282,12 @@ export const appRouter = router({
   // AI Chat with Self-Learning
   aiChat: router({
     // Enhanced chat with Grok API and Collections
-    sendMessage: publicProcedure.input((val: any) => val).mutation(async ({ input, ctx }) => {
+    sendMessage: protectedProcedure.input((val: any) => val).mutation(async ({ input, ctx }) => {
       try {
         const { invokeGrokWithLearning } = await import('./_core/grok');
         const { saveChatMessage, getChatHistory } = await import('./db');
-        
-        const userId = ctx.user?.id || 1;
+
+        const userId = ctx.user.id;
         
         // Save user message
         await saveChatMessage({
@@ -337,18 +337,18 @@ export const appRouter = router({
         }
       }
     }),
-    getHistory: publicProcedure.query(async ({ ctx }) => {
+    getHistory: protectedProcedure.query(async ({ ctx }) => {
       const { getChatHistory } = await import('./db');
-      const userId = ctx.user?.id || 1;
+      const userId = ctx.user.id;
       return getChatHistory(userId);
     }),
     // Collection management
-    createCollection: publicProcedure.input((val: any) => val).mutation(async ({ input }) => {
+    createCollection: protectedProcedure.input((val: any) => val).mutation(async ({ input }) => {
       const { createCollection } = await import('./_core/grok');
       const collection = await createCollection(input.name, input.description);
       return collection;
     }),
-    getCollections: publicProcedure.query(async () => {
+    getCollections: protectedProcedure.query(async () => {
       const { getCollections } = await import('./_core/grok');
       return getCollections();
     }),
@@ -356,18 +356,18 @@ export const appRouter = router({
 
   // Legacy chat endpoint (keep for backward compatibility)
   chat: router({
-    sendMessage: publicProcedure.input((val: any) => val).mutation(async ({ input }) => {
+    sendMessage: protectedProcedure.input((val: any) => val).mutation(async ({ input, ctx }) => {
       const { invokeLLM } = await import('./_core/llm');
       const { saveChatMessage } = await import('./db');
-      
+
+      const userId = ctx.user.id;
+
       // Save user message
-      if (input.userId) {
-        await saveChatMessage({
-          userId: input.userId,
-          role: 'user',
-          content: input.message,
-        });
-      }
+      await saveChatMessage({
+        userId,
+        role: 'user',
+        content: input.message,
+      });
 
       // Call LLM
       const systemPrompt = `You are an AI assistant helping users input forex account credentials. Extract structured data from unorganized text.
@@ -392,19 +392,17 @@ Respond in JSON format with the extracted fields. If information is missing, ask
       const assistantMessage = response.choices[0].message.content;
 
       // Save assistant message
-      if (input.userId) {
-        await saveChatMessage({
-          userId: input.userId,
-          role: 'assistant',
-          content: assistantMessage,
-        });
-      }
+      await saveChatMessage({
+        userId,
+        role: 'assistant',
+        content: assistantMessage,
+      });
 
       return { message: assistantMessage };
     }),
-    getHistory: publicProcedure.input((val: any) => val).query(async ({ input }) => {
+    getHistory: protectedProcedure.query(async ({ ctx }) => {
       const { getChatHistory } = await import('./db');
-      return getChatHistory(input.userId);
+      return getChatHistory(ctx.user.id);
     }),
   }),
 
