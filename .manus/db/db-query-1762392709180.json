@@ -1,0 +1,122 @@
+{
+  "query": "DESCRIBE forex_accounts;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3K7aSqVA1ngekxq.db2ef08c54f6 --database mGV9WeJytWUjveuKmyYagb --execute DESCRIBE forex_accounts;",
+  "rows": [
+    {
+      "Field": "id",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "PRI",
+      "Default": "NULL",
+      "Extra": "auto_increment"
+    },
+    {
+      "Field": "accountName",
+      "Type": "varchar(64)",
+      "Null": "NO",
+      "Key": "UNI",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "ownerName",
+      "Type": "varchar(128)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "accountBalance",
+      "Type": "varchar(32)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "0.00",
+      "Extra": ""
+    },
+    {
+      "Field": "accountLogin",
+      "Type": "varchar(128)",
+      "Null": "NO",
+      "Key": "UNI",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "investorPassword",
+      "Type": "varchar(256)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "masterPassword",
+      "Type": "varchar(256)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "platformType",
+      "Type": "enum('meta4','meta5')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "accountType",
+      "Type": "enum('usd','cent')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "platformNameServer",
+      "Type": "varchar(256)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "botRunning",
+      "Type": "varchar(256)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "linkedUserEmail",
+      "Type": "varchar(320)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "createdAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": ""
+    },
+    {
+      "Field": "updatedAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP"
+    }
+  ],
+  "messages": [],
+  "stdout": "Field\tType\tNull\tKey\tDefault\tExtra\nid\tint(11)\tNO\tPRI\tNULL\tauto_increment\naccountName\tvarchar(64)\tNO\tUNI\tNULL\t\nownerName\tvarchar(128)\tYES\t\tNULL\t\naccountBalance\tvarchar(32)\tYES\t\t0.00\t\naccountLogin\tvarchar(128)\tNO\tUNI\tNULL\t\ninvestorPassword\tvarchar(256)\tYES\t\tNULL\t\nmasterPassword\tvarchar(256)\tYES\t\tNULL\t\nplatformType\tenum('meta4','meta5')\tNO\t\tNULL\t\naccountType\tenum('usd','cent')\tNO\t\tNULL\t\nplatformNameServer\tvarchar(256)\tYES\t\tNULL\t\nbotRunning\tvarchar(256)\tYES\t\tNULL\t\nlinkedUserEmail\tvarchar(320)\tYES\t\tNULL\t\ncreatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\t\nupdatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\tDEFAULT_GENERATED on update CURRENT_TIMESTAMP\n",
+  "stderr": "",
+  "execution_time_ms": 1507
+}

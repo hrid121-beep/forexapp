@@ -1,0 +1,17 @@
+{
+  "query": "SELECT id, openId, name, email, role FROM users WHERE email = 'hello@jasonle.net';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3K7aSqVA1ngekxq.db2ef08c54f6 --database mGV9WeJytWUjveuKmyYagb --execute SELECT id, openId, name, email, role FROM users WHERE email = 'hello@jasonle.net';",
+  "rows": [
+    {
+      "id": "1",
+      "openId": "4ainQryy78yFLQfoeeYW3v",
+      "name": "Jasone Le",
+      "email": "hello@jasonle.net",
+      "role": "admin"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\topenId\tname\temail\trole\n1\t4ainQryy78yFLQfoeeYW3v\tJasone Le\thello@jasonle.net\tadmin\n",
+  "stderr": "",
+  "execution_time_ms": 1509
+}

@@ -1,0 +1,9 @@
+{
+  "query": "TRUNCATE TABLE forex_accounts;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3K7aSqVA1ngekxq.db2ef08c54f6 --database mGV9WeJytWUjveuKmyYagb --execute TRUNCATE TABLE forex_accounts;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1752
+}

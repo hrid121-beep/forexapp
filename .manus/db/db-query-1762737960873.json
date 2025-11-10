@@ -1,0 +1,21 @@
+{
+  "query": "SELECT * FROM users WHERE email = 'hello@jasonle.net';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3K7aSqVA1ngekxq.db2ef08c54f6 --database mGV9WeJytWUjveuKmyYagb --execute SELECT * FROM users WHERE email = 'hello@jasonle.net';",
+  "rows": [
+    {
+      "id": "1",
+      "openId": "4ainQryy78yFLQfoeeYW3v",
+      "name": "Jasone Le",
+      "email": "hello@jasonle.net",
+      "loginMethod": "google",
+      "role": "admin",
+      "createdAt": "2025-11-05 05:21:48",
+      "updatedAt": "2025-11-10 01:25:31",
+      "lastSignedIn": "2025-11-10 01:25:32"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\topenId\tname\temail\tloginMethod\trole\tcreatedAt\tupdatedAt\tlastSignedIn\n1\t4ainQryy78yFLQfoeeYW3v\tJasone Le\thello@jasonle.net\tgoogle\tadmin\t2025-11-05 05:21:48\t2025-11-10 01:25:31\t2025-11-10 01:25:32\n",
+  "stderr": "",
+  "execution_time_ms": 1549
+}

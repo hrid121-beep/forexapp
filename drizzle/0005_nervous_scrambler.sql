@@ -1,0 +1,1 @@
+ALTER TABLE `forex_accounts` ADD `brokerLogoUrl` varchar(512);
