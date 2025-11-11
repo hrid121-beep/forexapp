@@ -8,7 +8,13 @@ echo   Getting Claude's Latest Changes
 echo ====================================
 echo.
 
-echo [1/3] Fetching latest changes from Claude branch...
+echo [0/4] Preparing workspace...
+git add -A 2>nul
+git stash push -u -m "Auto-stash before merge" 2>nul
+echo [OK] Workspace prepared
+echo.
+
+echo [1/4] Fetching latest changes from Claude branch...
 git fetch origin claude/merged-to-main-011CUz9w9KAN2Axa3oDbSuFe
 if errorlevel 1 (
     echo [ERROR] Failed to fetch. Check internet connection.
@@ -18,7 +24,15 @@ if errorlevel 1 (
 echo [OK] Fetched successfully
 echo.
 
-echo [2/3] Merging changes into main...
+echo [2/4] Switching to main branch...
+git checkout main 2>nul
+if errorlevel 1 (
+    git checkout -b main
+)
+echo [OK] On main branch
+echo.
+
+echo [3/4] Merging changes into main...
 git merge origin/claude/merged-to-main-011CUz9w9KAN2Axa3oDbSuFe --no-edit
 if errorlevel 1 (
     echo [ERROR] Merge failed. May have conflicts.
@@ -28,7 +42,7 @@ if errorlevel 1 (
 echo [OK] Merged successfully
 echo.
 
-echo [3/3] Pushing to GitHub main...
+echo [4/4] Pushing to GitHub main...
 git push origin main
 if errorlevel 1 (
     echo [ERROR] Push failed.
